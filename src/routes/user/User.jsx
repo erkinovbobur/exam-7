@@ -55,54 +55,43 @@ const User = () => {
         >
           Create User
         </Button>
-        <table className="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-lg overflow-hidden">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Likes</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {data?.data?.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-50 transition-colors duration-200">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <img
-                    src={user.avatar}
-                    alt={`${user.first_name} ${user.last_name}`}
-                    className="w-12 h-12 rounded-full shadow-lg transform transition-transform duration-300 hover:scale-105"
-                  />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data?.data?.map((user) => (
+            <div key={user.id} className="bg-white rounded-lg shadow-lg p-6 hover:bg-gray-50 transition-transform transform hover:scale-105">
+              <div className="flex flex-col items-center">
+                <img
+                  src={user.avatar}
+                  alt={`${user.first_name} ${user.last_name}`}
+                  className="w-24 h-24 rounded-full shadow-lg transform transition-transform duration-300 hover:scale-110"
+                />
+                <h2 className="mt-4 text-lg font-bold text-gray-900">
                   {user.first_name} {user.last_name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.email}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                </h2>
+                <p className="text-sm text-gray-500">{user.email}</p>
+              </div>
+
+              <div className="mt-4 flex justify-between items-center">
+                <div>
                   <IconButton onClick={() => handleLike(user.id)}>
                     <FavoriteIcon className={`transition-transform transform ${likes[user.id] ? 'text-red-500 scale-125' : 'text-gray-400 hover:scale-110'}`} />
                   </IconButton>
                   <span>{likes[user.id] ? 'Liked' : 'Not Liked'}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex space-x-4">
-                    <Link to={`/single/${user.id}`}>
-                      <Button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105">
-                        View
-                      </Button>
-                    </Link>
-                    <IconButton onClick={() => handleDelete(user.id)}>
-                      <DeleteIcon className="text-red-500 hover:text-red-700 transition-transform transform hover:scale-105" />
-                    </IconButton>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+                <div className="flex space-x-2">
+                  <Link to={`/single/${user.id}`}>
+                    <Button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105">
+                      View
+                    </Button>
+                  </Link>
+                  <IconButton onClick={() => handleDelete(user.id)}>
+                    <DeleteIcon className="text-red-500 hover:text-red-700 transition-transform transform hover:scale-105" />
+                  </IconButton>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <ToastContainer />
